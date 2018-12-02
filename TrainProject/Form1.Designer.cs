@@ -50,6 +50,9 @@
             this.btnDepartAt = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnArriveAt = new System.Windows.Forms.RadioButton();
+            this.btnClearFromStation = new System.Windows.Forms.Button();
+            this.btnClearToStation = new System.Windows.Forms.Button();
+            this.btnSwitchStation = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataConnections)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -57,7 +60,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(56, 9);
+            this.label1.Location = new System.Drawing.Point(57, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(26, 13);
             this.label1.TabIndex = 0;
@@ -65,7 +68,7 @@
             // 
             // FromStationText
             // 
-            this.FromStationText.Location = new System.Drawing.Point(59, 25);
+            this.FromStationText.Location = new System.Drawing.Point(60, 29);
             this.FromStationText.Name = "FromStationText";
             this.FromStationText.Size = new System.Drawing.Size(206, 20);
             this.FromStationText.TabIndex = 1;
@@ -73,7 +76,7 @@
             // 
             // ToStationText
             // 
-            this.ToStationText.Location = new System.Drawing.Point(59, 91);
+            this.ToStationText.Location = new System.Drawing.Point(60, 103);
             this.ToStationText.Name = "ToStationText";
             this.ToStationText.Size = new System.Drawing.Size(206, 20);
             this.ToStationText.TabIndex = 2;
@@ -82,7 +85,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(56, 75);
+            this.label2.Location = new System.Drawing.Point(57, 87);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(20, 13);
             this.label2.TabIndex = 5;
@@ -91,7 +94,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(56, 212);
+            this.label3.Location = new System.Drawing.Point(57, 224);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(128, 13);
             this.label3.TabIndex = 8;
@@ -100,7 +103,7 @@
             // FromCombo
             // 
             this.FromCombo.FormattingEnabled = true;
-            this.FromCombo.Location = new System.Drawing.Point(59, 47);
+            this.FromCombo.Location = new System.Drawing.Point(60, 51);
             this.FromCombo.Name = "FromCombo";
             this.FromCombo.Size = new System.Drawing.Size(206, 21);
             this.FromCombo.TabIndex = 10;
@@ -109,7 +112,7 @@
             // ToCombo
             // 
             this.ToCombo.FormattingEnabled = true;
-            this.ToCombo.Location = new System.Drawing.Point(59, 117);
+            this.ToCombo.Location = new System.Drawing.Point(60, 129);
             this.ToCombo.Name = "ToCombo";
             this.ToCombo.Size = new System.Drawing.Size(206, 21);
             this.ToCombo.TabIndex = 11;
@@ -125,7 +128,7 @@
             this.LengthRow,
             this.DepartureRow,
             this.ArrivalRow});
-            this.dataConnections.Location = new System.Drawing.Point(59, 228);
+            this.dataConnections.Location = new System.Drawing.Point(60, 240);
             this.dataConnections.MultiSelect = false;
             this.dataConnections.Name = "dataConnections";
             this.dataConnections.ReadOnly = true;
@@ -167,7 +170,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(459, 9);
+            this.label4.Location = new System.Drawing.Point(460, 21);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 13;
@@ -176,7 +179,7 @@
             // departureDatePicker
             // 
             this.departureDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.departureDatePicker.Location = new System.Drawing.Point(462, 25);
+            this.departureDatePicker.Location = new System.Drawing.Point(463, 37);
             this.departureDatePicker.Name = "departureDatePicker";
             this.departureDatePicker.Size = new System.Drawing.Size(200, 20);
             this.departureDatePicker.TabIndex = 14;
@@ -186,7 +189,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(459, 75);
+            this.label5.Location = new System.Drawing.Point(460, 87);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(25, 13);
             this.label5.TabIndex = 15;
@@ -195,7 +198,7 @@
             // txtDepartureTime
             // 
             this.txtDepartureTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDepartureTime.Location = new System.Drawing.Point(462, 91);
+            this.txtDepartureTime.Location = new System.Drawing.Point(463, 103);
             this.txtDepartureTime.Name = "txtDepartureTime";
             this.txtDepartureTime.Size = new System.Drawing.Size(73, 20);
             this.txtDepartureTime.TabIndex = 16;
@@ -203,21 +206,21 @@
             // 
             // btnFromMap
             // 
-            this.btnFromMap.Location = new System.Drawing.Point(271, 47);
+            this.btnFromMap.Location = new System.Drawing.Point(272, 51);
             this.btnFromMap.Name = "btnFromMap";
-            this.btnFromMap.Size = new System.Drawing.Size(37, 23);
+            this.btnFromMap.Size = new System.Drawing.Size(80, 23);
             this.btnFromMap.TabIndex = 17;
-            this.btnFromMap.Text = "Map";
+            this.btnFromMap.Text = "Karte";
             this.btnFromMap.UseVisualStyleBackColor = true;
             this.btnFromMap.Click += new System.EventHandler(this.btnFromMap_Click);
             // 
             // btnToMap
             // 
-            this.btnToMap.Location = new System.Drawing.Point(271, 115);
+            this.btnToMap.Location = new System.Drawing.Point(272, 127);
             this.btnToMap.Name = "btnToMap";
-            this.btnToMap.Size = new System.Drawing.Size(37, 23);
+            this.btnToMap.Size = new System.Drawing.Size(80, 23);
             this.btnToMap.TabIndex = 18;
-            this.btnToMap.Text = "Map";
+            this.btnToMap.Text = "Karte";
             this.btnToMap.UseVisualStyleBackColor = true;
             this.btnToMap.Click += new System.EventHandler(this.btnToMap_Click);
             // 
@@ -237,7 +240,7 @@
             // 
             this.groupBox1.Controls.Add(this.btnArriveAt);
             this.groupBox1.Controls.Add(this.btnDepartAt);
-            this.groupBox1.Location = new System.Drawing.Point(462, 141);
+            this.groupBox1.Location = new System.Drawing.Point(463, 153);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(193, 72);
             this.groupBox1.TabIndex = 20;
@@ -256,11 +259,44 @@
             this.btnArriveAt.UseVisualStyleBackColor = true;
             this.btnArriveAt.CheckedChanged += new System.EventHandler(this.btnArriveAt_CheckedChanged);
             // 
+            // btnClearFromStation
+            // 
+            this.btnClearFromStation.Location = new System.Drawing.Point(272, 29);
+            this.btnClearFromStation.Name = "btnClearFromStation";
+            this.btnClearFromStation.Size = new System.Drawing.Size(80, 20);
+            this.btnClearFromStation.TabIndex = 21;
+            this.btnClearFromStation.Text = "Löschen";
+            this.btnClearFromStation.UseVisualStyleBackColor = true;
+            this.btnClearFromStation.Click += new System.EventHandler(this.btnClearFromStation_Click);
+            // 
+            // btnClearToStation
+            // 
+            this.btnClearToStation.Location = new System.Drawing.Point(272, 103);
+            this.btnClearToStation.Name = "btnClearToStation";
+            this.btnClearToStation.Size = new System.Drawing.Size(80, 20);
+            this.btnClearToStation.TabIndex = 22;
+            this.btnClearToStation.Text = "Löschen";
+            this.btnClearToStation.UseVisualStyleBackColor = true;
+            this.btnClearToStation.Click += new System.EventHandler(this.btnClearToStation_Click);
+            // 
+            // btnSwitchStation
+            // 
+            this.btnSwitchStation.Location = new System.Drawing.Point(272, 77);
+            this.btnSwitchStation.Name = "btnSwitchStation";
+            this.btnSwitchStation.Size = new System.Drawing.Size(80, 23);
+            this.btnSwitchStation.TabIndex = 24;
+            this.btnSwitchStation.Text = "Switch";
+            this.btnSwitchStation.UseVisualStyleBackColor = true;
+            this.btnSwitchStation.Click += new System.EventHandler(this.btnSwitchStation_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(741, 613);
+            this.Controls.Add(this.btnSwitchStation);
+            this.Controls.Add(this.btnClearToStation);
+            this.Controls.Add(this.btnClearFromStation);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnToMap);
             this.Controls.Add(this.btnFromMap);
@@ -311,6 +347,9 @@
         private System.Windows.Forms.RadioButton btnDepartAt;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton btnArriveAt;
+        private System.Windows.Forms.Button btnClearFromStation;
+        private System.Windows.Forms.Button btnClearToStation;
+        private System.Windows.Forms.Button btnSwitchStation;
     }
 }
 

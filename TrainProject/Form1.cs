@@ -267,12 +267,19 @@ namespace TrainProject
 
         private void btnFromMap_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.google.com/maps/search/?api=1&query=" + fromCoordinates[FromCombo.SelectedIndex]);
+            if (!String.IsNullOrEmpty(FromCombo.SelectedText))
+            {
+                System.Diagnostics.Process.Start("https://www.google.com/maps/search/?api=1&query=" + fromCoordinates[FromCombo.SelectedIndex]);
+            }
         }
 
         private void btnToMap_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.google.com/maps/search/?api=1&query=" + toCoordinates[ToCombo.SelectedIndex]);
+            if (!String.IsNullOrEmpty(ToCombo.SelectedText))
+            {
+                System.Diagnostics.Process.Start("https://www.google.com/maps/search/?api=1&query=" + toCoordinates[ToCombo.SelectedIndex]);
+            }
+                
         }
         string formatCoordinatesCorrectly(string coordinates)
         {
@@ -302,6 +309,47 @@ namespace TrainProject
         private void btnArriveAt_CheckedChanged(object sender, EventArgs e)
         {
             SearchConnections();
+        }
+
+        private void btnClearFromStation_Click(object sender, EventArgs e)
+        {
+            FromCombo.Items.Clear();
+            FromCombo.Text = "";
+            FromStationText.Text = "";
+        }
+
+        private void btnClearToStation_Click(object sender, EventArgs e)
+        {
+            ToCombo.Items.Clear();
+            ToCombo.Text = "";
+            ToStationText.Text = "";
+        }
+
+        private void btnSwitchStation_Click(object sender, EventArgs e)
+        {
+            string tempFromText = FromStationText.Text;
+            string tempFromCombo = FromCombo.Text;
+            List<string> tempFromList = new List<string>();
+            foreach (string item in FromCombo.Items)
+            {
+                tempFromList.Add(item);
+            }
+
+            FromCombo.Items.Clear();
+            foreach (string item in ToCombo.Items)
+            {
+                FromCombo.Items.Add(item);
+            }
+            FromStationText.Text = ToStationText.Text;
+            FromCombo.Text = ToCombo.Text;
+
+            ToCombo.Items.Clear();
+            foreach (string item in tempFromList)
+            {
+                ToCombo.Items.Add(item);
+            }
+            ToStationText.Text = tempFromText;
+            ToCombo.Text = tempFromCombo;
         }
     }
 }

@@ -13,3 +13,17 @@ C:\Modul_318\modul-318-student-master\modul-318-student-master\TrainProject\obj\
 C:\Modul_318\modul-318-student-master\modul-318-student-master\TrainProject\obj\Debug\TrainProject.csproj.CopyComplete
 C:\Modul_318\modul-318-student-master\modul-318-student-master\TrainProject\obj\Debug\TrainProject.exe
 C:\Modul_318\modul-318-student-master\modul-318-student-master\TrainProject\obj\Debug\TrainProject.pdb
+C:\Modul_318\modul-318-student-master\TrainProject\bin\Debug\TrainProject.exe.config
+C:\Modul_318\modul-318-student-master\TrainProject\bin\Debug\TrainProject.exe
+C:\Modul_318\modul-318-student-master\TrainProject\bin\Debug\TrainProject.pdb
+C:\Modul_318\modul-318-student-master\TrainProject\bin\Debug\SwissTransport.dll
+C:\Modul_318\modul-318-student-master\TrainProject\bin\Debug\Newtonsoft.Json.dll
+C:\Modul_318\modul-318-student-master\TrainProject\bin\Debug\SwissTransport.pdb
+C:\Modul_318\modul-318-student-master\TrainProject\bin\Debug\Newtonsoft.Json.xml
+C:\Modul_318\modul-318-student-master\TrainProject\obj\Debug\TrainProject.csprojResolveAssemblyReference.cache
+C:\Modul_318\modul-318-student-master\TrainProject\obj\Debug\TrainProject.Form1.resources
+C:\Modul_318\modul-318-student-master\TrainProject\obj\Debug\TrainProject.Properties.Resources.resources
+C:\Modul_318\modul-318-student-master\TrainProject\obj\Debug\TrainProject.csproj.GenerateResource.Cache
+C:\Modul_318\modul-318-student-master\TrainProject\obj\Debug\TrainProject.csproj.CoreCompileInputs.cache
+C:\Modul_318\modul-318-student-master\TrainProject\obj\Debug\TrainProject.exe
+C:\Modul_318\modul-318-student-master\TrainProject\obj\Debug\TrainProject.pdb
