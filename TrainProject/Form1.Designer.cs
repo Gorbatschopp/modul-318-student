@@ -53,6 +53,8 @@
             this.btnClearFromStation = new System.Windows.Forms.Button();
             this.btnClearToStation = new System.Windows.Forms.Button();
             this.btnSwitchStation = new System.Windows.Forms.Button();
+            this.findNearStation = new System.Windows.Forms.Button();
+            this.btnMakeMail = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataConnections)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -72,7 +74,7 @@
             this.FromStationText.Name = "FromStationText";
             this.FromStationText.Size = new System.Drawing.Size(206, 20);
             this.FromStationText.TabIndex = 1;
-            this.FromStationText.TextChanged += new System.EventHandler(this.ChangesFromText);
+            this.FromStationText.TextChanged += new System.EventHandler(this.FromStationText_TextChanged);
             // 
             // ToStationText
             // 
@@ -80,7 +82,7 @@
             this.ToStationText.Name = "ToStationText";
             this.ToStationText.Size = new System.Drawing.Size(206, 20);
             this.ToStationText.TabIndex = 2;
-            this.ToStationText.TextChanged += new System.EventHandler(this.ChangesToText);
+            this.ToStationText.TextChanged += new System.EventHandler(this.ToStationText_TextChanged);
             // 
             // label2
             // 
@@ -120,6 +122,10 @@
             // 
             // dataConnections
             // 
+            this.dataConnections.AllowUserToResizeColumns = false;
+            this.dataConnections.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataConnections.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataConnections.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataConnections.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -238,6 +244,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.btnArriveAt);
             this.groupBox1.Controls.Add(this.btnDepartAt);
             this.groupBox1.Location = new System.Drawing.Point(463, 153);
@@ -289,11 +296,34 @@
             this.btnSwitchStation.UseVisualStyleBackColor = true;
             this.btnSwitchStation.Click += new System.EventHandler(this.btnSwitchStation_Click);
             // 
+            // findNearStation
+            // 
+            this.findNearStation.Location = new System.Drawing.Point(359, 29);
+            this.findNearStation.Name = "findNearStation";
+            this.findNearStation.Size = new System.Drawing.Size(95, 45);
+            this.findNearStation.TabIndex = 25;
+            this.findNearStation.Text = "Stationen in der nähe finden";
+            this.findNearStation.UseVisualStyleBackColor = true;
+            this.findNearStation.Click += new System.EventHandler(this.findNearStation_Click);
+            // 
+            // btnMakeMail
+            // 
+            this.btnMakeMail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMakeMail.Location = new System.Drawing.Point(588, 562);
+            this.btnMakeMail.Name = "btnMakeMail";
+            this.btnMakeMail.Size = new System.Drawing.Size(75, 23);
+            this.btnMakeMail.TabIndex = 26;
+            this.btnMakeMail.Text = "Mail machen";
+            this.btnMakeMail.UseVisualStyleBackColor = true;
+            this.btnMakeMail.Click += new System.EventHandler(this.btnMakeMail_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(741, 613);
+            this.Controls.Add(this.btnMakeMail);
+            this.Controls.Add(this.findNearStation);
             this.Controls.Add(this.btnSwitchStation);
             this.Controls.Add(this.btnClearToStation);
             this.Controls.Add(this.btnClearFromStation);
@@ -312,8 +342,10 @@
             this.Controls.Add(this.ToStationText);
             this.Controls.Add(this.FromStationText);
             this.Controls.Add(this.label1);
+            this.MinimumSize = new System.Drawing.Size(757, 652);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing_1);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataConnections)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -350,6 +382,8 @@
         private System.Windows.Forms.Button btnClearFromStation;
         private System.Windows.Forms.Button btnClearToStation;
         private System.Windows.Forms.Button btnSwitchStation;
+        private System.Windows.Forms.Button findNearStation;
+        private System.Windows.Forms.Button btnMakeMail;
     }
 }
 
