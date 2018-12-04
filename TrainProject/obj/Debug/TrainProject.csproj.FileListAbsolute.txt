@@ -28,3 +28,7 @@ C:\Modul_318\modul-318-student-master\TrainProject\obj\Debug\TrainProject.csproj
 C:\Modul_318\modul-318-student-master\TrainProject\obj\Debug\TrainProject.exe
 C:\Modul_318\modul-318-student-master\TrainProject\obj\Debug\TrainProject.pdb
 C:\Modul_318\modul-318-student-master\modul-318-student-master\TrainProject\obj\Debug\TrainProject.MailForm.resources
+C:\Modul_318\modul-318-student-master\modul-318-student-master\TrainProject\bin\Debug\TrainProject.exe.manifest
+C:\Modul_318\modul-318-student-master\modul-318-student-master\TrainProject\bin\Debug\TrainProject.application
+C:\Modul_318\modul-318-student-master\modul-318-student-master\TrainProject\obj\Debug\TrainProject.exe.manifest
+C:\Modul_318\modul-318-student-master\modul-318-student-master\TrainProject\obj\Debug\TrainProject.application

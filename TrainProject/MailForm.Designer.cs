@@ -66,7 +66,7 @@
             this.textMailBody.Location = new System.Drawing.Point(43, 108);
             this.textMailBody.Name = "textMailBody";
             this.textMailBody.Size = new System.Drawing.Size(493, 275);
-            this.textMailBody.TabIndex = 2;
+            this.textMailBody.TabIndex = 5;
             this.textMailBody.Text = "";
             // 
             // textToMail
@@ -76,7 +76,7 @@
             this.textToMail.Location = new System.Drawing.Point(72, 54);
             this.textToMail.Name = "textToMail";
             this.textToMail.Size = new System.Drawing.Size(464, 20);
-            this.textToMail.TabIndex = 4;
+            this.textToMail.TabIndex = 3;
             // 
             // label2
             // 
@@ -93,7 +93,7 @@
             this.btnSendMail.Location = new System.Drawing.Point(461, 388);
             this.btnSendMail.Name = "btnSendMail";
             this.btnSendMail.Size = new System.Drawing.Size(75, 23);
-            this.btnSendMail.TabIndex = 5;
+            this.btnSendMail.TabIndex = 6;
             this.btnSendMail.Text = "Senden";
             this.btnSendMail.UseVisualStyleBackColor = true;
             this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
@@ -105,7 +105,7 @@
             this.textMailSubject.Location = new System.Drawing.Point(82, 80);
             this.textMailSubject.Name = "textMailSubject";
             this.textMailSubject.Size = new System.Drawing.Size(454, 20);
-            this.textMailSubject.TabIndex = 6;
+            this.textMailSubject.TabIndex = 4;
             // 
             // label3
             // 
@@ -124,7 +124,7 @@
             this.textPassword.Name = "textPassword";
             this.textPassword.PasswordChar = '*';
             this.textPassword.Size = new System.Drawing.Size(131, 20);
-            this.textPassword.TabIndex = 8;
+            this.textPassword.TabIndex = 2;
             // 
             // label4
             // 

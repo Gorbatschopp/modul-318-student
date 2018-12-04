@@ -24,8 +24,6 @@ namespace TrainProject
         private string tempToStation = string.Empty;
         private string timeQueryConnections;
         private string timeQueryBoard;
-        private string departureTime;
-        private string departureDate;
 
         private List<string> fromStationID = new List<string>();
         private List<string> fromCoordinates = new List<string>();
@@ -35,60 +33,73 @@ namespace TrainProject
         private bool skipRound = false;
         private bool startedLoop = false;
 
-        private int departureOrArrival = 0;
-
         private Timer timer1 = new Timer();
 
         public Form1()
         {
             this.InitializeComponent();
-            this.SetFromStationChangeButtons();
-            this.SetToStationChangeButtons();
+            this.SetStationChangeButtons();
             GetLocationProperty();
             if (coord.IsUnknown)
             {
-                findNearStation.Visible = false;
+                this.findNearStation.Visible = false;
             }
         }
 
+        /// <summary>
+        /// Diese Funktion wird zum ersten mal ausgeführt, wenn ein Text verändert wird.
+        /// Danach wird sie jede Sekunde aufgerufen und überprüft ob sich etwas geändert hat.
+        /// </summary>
         private void UpdateTexts()
         {
             while (this.startedLoop)
             {
                 if (!this.skipRound)
                 {
-                    if (FromStationText.Text != string.Empty && this.tempFromStation != FromStationText.Text)
+                    if (this.tempFromStation != this.FromStationText.Text)
                     {
-                        FromCombo.Items.Clear();
-                        this.SearchForStation(FromStationText.Text, 0);
-                        this.SetFromStationChangeButtons();
+                        this.FromCombo.Items.Clear();
+                        this.SearchForStation(this.FromStationText.Text, 0);
+                        if (this.FromStationText.Text == string.Empty)
+                        {
+                            this.FromCombo.Text = string.Empty;
+                        }
                     }
 
-                    this.tempFromStation = FromStationText.Text;
+                    this.tempFromStation = this.FromStationText.Text;
 
-                    if (ToStationText.Text != string.Empty && this.tempToStation != ToStationText.Text)
+                    if (this.tempToStation != this.ToStationText.Text)
                     {
-                        ToCombo.Items.Clear();
-                        if (ToStationText.Text == string.Empty)
+                        this.ToCombo.Items.Clear();
+                        if (this.ToStationText.Text == string.Empty)
                         {
-                            ToCombo.SelectedItem = null;
-                            this.SearchConnections();
+                            this.ToCombo.Text = string.Empty;
+                            this.UseApi();
                         }
                         else
                         {
-                            this.SearchForStation(ToStationText.Text, 1);
+                            this.SearchForStation(this.ToStationText.Text, 1);
                         }
-
-                        this.SetToStationChangeButtons();
                     }
 
-                    this.tempToStation = ToStationText.Text;
-                    this.wait(1000);
+                    if (this.ToStationText.Text != string.Empty)
+                    {
+                        this.groupBox1.Visible = true;
+                    }
+                    else
+                    {
+                        this.groupBox1.Visible = false;
+                    }
+
+                    SetStationChangeButtons();
+
+                    this.tempToStation = this.ToStationText.Text;
+                    this.Wait(1000);
                 }
                 else
                 {
-                    this.tempToStation = ToStationText.Text;
-                    this.tempFromStation = FromStationText.Text;
+                    this.tempToStation = this.ToStationText.Text;
+                    this.tempFromStation = this.FromStationText.Text;
                     this.skipRound = false;
                 }
             }
@@ -97,307 +108,290 @@ namespace TrainProject
             {
                 GetLocationProperty();
             }
-        }
-
-        private void SetFromStationChangeButtons()
-        {
-            if (FromStationText.Text == string.Empty)
-            {
-                btnClearFromStation.Enabled = false;
-            }
             else
             {
-                btnClearFromStation.Enabled = true;
-            }
-
-            if (FromCombo.Text == string.Empty)
-            {
-                btnFromMap.Enabled = false;
-            }
-            else
-            {
-                btnFromMap.Enabled = true;
-            }
-
-            if (FromCombo.Text != string.Empty && ToCombo.Text != string.Empty)
-            {
-                btnSwitchStation.Enabled = true;
-            }
-            else
-            {
-                btnSwitchStation.Enabled = false;
+                this.findNearStation.Visible = true;
             }
         }
 
-        private void SetToStationChangeButtons()
+        /// <summary>
+        /// Diese Funktion kümmert sich darum, alle Buttons an bzw. aus zu schalten.
+        /// </summary>
+        private void SetStationChangeButtons()
         {
-            if (ToStationText.Text == string.Empty)
+            if (this.FromStationText.Text == string.Empty)
             {
-                btnClearToStation.Enabled = false;
+                this.btnClearFromStation.Enabled = false;
             }
             else
             {
-                btnClearToStation.Enabled = true;
+                this.btnClearFromStation.Enabled = true;
             }
 
-            if (FromCombo.Text == string.Empty)
+            if (this.FromCombo.Text == string.Empty)
             {
-                btnToMap.Enabled = false;
+                this.btnFromMap.Enabled = false;
             }
             else
             {
-                btnToMap.Enabled = true;
+                this.btnFromMap.Enabled = true;
             }
 
-            if (FromCombo.Text != string.Empty && ToCombo.Text != string.Empty)
+            if (this.FromCombo.Text != string.Empty && this.ToCombo.Text != string.Empty)
             {
-                btnSwitchStation.Enabled = true;
+                this.btnSwitchStation.Enabled = true;
             }
             else
             {
-                btnSwitchStation.Enabled = false;
+                this.btnSwitchStation.Enabled = false;
+            }
+            if (this.ToStationText.Text == string.Empty)
+            {
+                this.btnClearToStation.Enabled = false;
+            }
+            else
+            {
+                this.btnClearToStation.Enabled = true;
+            }
+
+            if (this.FromCombo.Text == string.Empty)
+            {
+                this.btnToMap.Enabled = false;
+            }
+            else
+            {
+                this.btnToMap.Enabled = true;
+            }
+
+            if (this.FromCombo.Text != string.Empty && this.ToCombo.Text != string.Empty)
+            {
+                this.btnSwitchStation.Enabled = true;
+            }
+            else
+            {
+                this.btnSwitchStation.Enabled = false;
             }
         }
 
-        private void ChangesFromText(object sender, EventArgs e)
+        /// <summary>
+        /// Diese Funktion sucht nach den Stationen welche man in den Textboxen eingibt und schreibt diese in die Comboboxen
+        /// </summary>
+        /// <param name="stationName"></param>
+        /// <param name="fromOrTo"></param>
+        private void SearchForStation(string stationName, int fromOrTo)
         {
-            FromCombo.Items.Clear();
-            this.SearchForStation(FromStationText.Text, 0);
-            this.SetFromStationChangeButtons();
-        }
-
-        private void ChangesToText(object sender, EventArgs e)
-        {
-            ToCombo.Items.Clear();
-            if (ToStationText.Text == string.Empty)
+            this.fromCoordinates.Clear();
+            Stations allStations = this.transport.GetStations(stationName);
+            if (fromOrTo == 0)
             {
-                ToCombo.SelectedItem = null;
-                this.SearchConnections();
-            }
-            else
-            {
-                SearchForStation(ToStationText.Text, 1);
-            }
-            this.SetToStationChangeButtons();
-        }
-        void SearchForStation(string stationName, int FromOrTo)
-        {
-            fromCoordinates.Clear();
-            Stations AllStations = transport.GetStations(stationName);
-            if (FromOrTo == 0)
-            {
-                List<string> FromComboList = new List<string>();
-
-                foreach (var item in AllStations.StationList)
+                List<string> fromComboList = new List<string>();
+                try
                 {
-                    if (item.Name != null)
+                    foreach (var item in allStations.StationList)
                     {
-                        FromComboList.Add(item.Name);
-
-                        if (item.Id != null)
+                        if (item.Name != null)
                         {
-                            fromStationID.Add(item.Id.ToString());
+                            fromComboList.Add(item.Name);
+
+                            if (item.Id != null)
+                            {
+                                this.fromStationID.Add(item.Id.ToString());
+                            }
+
+                            if (item.Coordinate != null)
+                            {
+                                this.fromCoordinates.Add(this.format.FormatCoordinatesCorrectly(item.Coordinate.XCoordinate.ToString()) + "," + this.format.FormatCoordinatesCorrectly(item.Coordinate.YCoordinate.ToString()));
+                            }
                         }
+                    }
+
+                    foreach (var item in fromComboList)
+                    {
+                        this.FromCombo.Items.Add(item);
+                    }
+
+                    if (this.FromCombo.Items.Count > 0)
+                    {
+                        this.FromCombo.SelectedIndex = 0;
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Es sieht so aus, als ob keine Verbindungen gefunden werden konnten.\n" +
+                    "Bitte überprüfen Sie Ihre Eingabe oder versichern Sie sich, dass Sie mit dem Internet verbunden sind", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                }
+                
+            }
+            else if (fromOrTo == 1)
+            {
+                this.toCoordinates.Clear();
+                List<string> toComboList = new List<string>();
+                try
+                {
+                    foreach (var item in allStations.StationList)
+                    {
+                        if (item.Name != null)
+                        {
+                            toComboList.Add(item.Name);
+                        }
+
                         if (item.Coordinate != null)
                         {
-                            fromCoordinates.Add(format.formatCoordinatesCorrectly(item.Coordinate.XCoordinate.ToString()) + "," + format.formatCoordinatesCorrectly(item.Coordinate.YCoordinate.ToString()));
+                            this.toCoordinates.Add(this.format.FormatCoordinatesCorrectly(item.Coordinate.XCoordinate.ToString()) + "," + this.format.FormatCoordinatesCorrectly(item.Coordinate.YCoordinate.ToString()));
                         }
-
                     }
-                }
 
-                foreach (var item in FromComboList)
-                {
-                    FromCombo.Items.Add(item);
-                }
-
-                if (FromCombo.Items.Count > 0)
-                {
-                    FromCombo.SelectedIndex = 0;
-                }
-            }
-            else if (FromOrTo == 1)
-            {
-                toCoordinates.Clear();
-                List<string> ToComboList = new List<string>();
-                if (groupBox1.Visible == false)
-                {
-                    groupBox1.Visible = true;
-                }
-
-                foreach (var item in AllStations.StationList)
-                {
-                    if (item.Name != null)
+                    foreach (var item in toComboList)
                     {
-                        ToComboList.Add(item.Name);
+                        this.ToCombo.Items.Add(item);
                     }
-                    if (item.Coordinate != null)
+
+                    if (this.ToCombo.Items.Count > 0)
                     {
-                        toCoordinates.Add(format.formatCoordinatesCorrectly(item.Coordinate.XCoordinate.ToString()) + "," + format.formatCoordinatesCorrectly(item.Coordinate.YCoordinate.ToString()));
+                        this.ToCombo.SelectedIndex = 0;
                     }
                 }
-
-                foreach (var item in ToComboList)
+                catch (Exception)
                 {
-                    ToCombo.Items.Add(item);
-                }
-
-                if (ToCombo.Items.Count > 0)
-                {
-                    ToCombo.SelectedIndex = 0;
+                    MessageBox.Show("Es sieht so aus, als ob keine Verbindungen gefunden werden konnten.\n" +
+                    "Bitte überprüfen Sie Ihre Eingabe oder versichern Sie sich, dass Sie mit dem Internet verbunden sind", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
                 }
             }
-            renameSearchButton();
-            SearchConnections();
+
+            this.UseApi();
         }
 
-        private void SearchConnections()
+        /// <summary>
+        /// Diese Funktion entscheidet, ob die Verbindungen gesucht werden oder ob die Abfahrtstafel angezeigt werden soll
+        /// Nach diesem Prinzip entscheidet sie dann, welche Funktionen von nun an ausgeführt werden sollen
+        /// </summary>
+        private void UseApi()
         {
-            dataConnections.Rows.Clear();
-            string FromListItem = null;
+            this.dataConnections.Rows.Clear();
+            string fromListItem = null;
 
-            if (FromCombo.SelectedItem != null)
+            if (this.FromCombo.SelectedItem != null)
             {
-                FromListItem = FromCombo.SelectedItem.ToString();
-            }
-            string ToListItem = null;
-
-            if (ToCombo.SelectedItem != null)
-            {
-                ToListItem = ToCombo.SelectedItem.ToString();
+                fromListItem = this.FromCombo.SelectedItem.ToString();
             }
 
-            if (!string.IsNullOrEmpty(FromListItem) && !string.IsNullOrEmpty(ToListItem))
+            string toListItem = null;
+
+            if (this.ToCombo.SelectedItem != null)
             {
-                SearchForConnections();
+                toListItem = this.ToCombo.SelectedItem.ToString();
             }
-            else if (!string.IsNullOrEmpty(FromListItem))
+
+            if (!string.IsNullOrEmpty(fromListItem) && !string.IsNullOrEmpty(toListItem))
             {
-                SearchForDepartures();
+                this.SearchForConnections();
             }
-            else
+            else if (!string.IsNullOrEmpty(fromListItem))
             {
-                //Error pls no
+                this.SearchForDepartures();
             }
         }
 
-
-        void SearchForConnections()
+        /// <summary>
+        /// Diese Funktion such nach den Verbindungen zwischen den zwei Stationen
+        /// </summary>
+        private void SearchForConnections()
         {
-            listForTextForMail.Clear();
-            Connections Connections = transport.GetConnections(FromCombo.SelectedItem.ToString(), ToCombo.SelectedItem.ToString(), timeQueryConnections, arrivalOrDeparture());
-
-            foreach (var item in Connections.ConnectionList)
+            this.listForTextForMail.Clear();
+            Connections connections = this.transport.GetConnections(this.FromCombo.SelectedItem.ToString(), this.ToCombo.SelectedItem.ToString(), this.timeQueryConnections, this.ArrivalOrDeparture());
+            try
             {
-                dataConnections.Rows.Add(item.From.Station.Name, item.To.Station.Name, item.Duration, format.formatDateCorrectly(item.From.Departure), format.formatDateCorrectly(item.To.Arrival), item.Duration);
+                foreach (var item in connections.ConnectionList)
+                {
+                    this.dataConnections.Rows.Add(item.From.Station.Name, item.To.Station.Name, item.Duration, this.format.FormatDateCorrectly(item.From.Departure), this.format.FormatDateCorrectly(item.To.Arrival), item.Duration);
+                }
+
+                foreach (var item in connections.ConnectionList)
+                {
+                    this.listForTextForMail.Add("Von "+ item.From.Station.Name + " zu " + item.To.Station.Name + " für " + item.Duration + " h am " + this.format.FormatDateCorrectly(item.From.Departure) + " um " + this.format.FormatDateCorrectly(item.To.Arrival));
+                }
             }
-
-            foreach (var item in Connections.ConnectionList)
+            catch (Exception)
             {
-                listForTextForMail.Add("Von "+ item.From.Station.Name + " zu " + item.To.Station.Name + " für " + item.Duration + " h am " + format.formatDateCorrectly(item.From.Departure) + " um " + format.formatDateCorrectly(item.To.Arrival));
+
+                MessageBox.Show("Es sieht so aus, als ob keine Verbindungen gefunden werden konnten.\n " +
+                    "Bitte überprüfen Sie Ihre Eingabe oder versichern Sie sich, dass Sie mit dem Internet verbunden sind", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
             }
         }
-        void SearchForDepartures()
+
+        /// <summary>
+        /// Diese Funktion schreibt die Abfahrtstafel der Station rein
+        /// </summary>
+        private void SearchForDepartures()
         {
-            listForTextForMail.Clear();
+            this.listForTextForMail.Clear();
             int maxAmountOfConnections = 5;
             int connectionsShown = 0;
-            StationBoardRoot StationBoard = transport.GetStationBoard(FromCombo.SelectedItem.ToString(), fromStationID[FromCombo.SelectedIndex], timeQueryBoard);
-
-            foreach (var item in StationBoard.Entries)
+            StationBoardRoot stationBoard = this.transport.GetStationBoard(this.FromCombo.SelectedItem.ToString(), this.fromStationID[this.FromCombo.SelectedIndex], this.timeQueryBoard);
+            try
             {
-                if (connectionsShown <= maxAmountOfConnections)
+                foreach (var item in stationBoard.Entries)
                 {
-                    dataConnections.Rows.Add(FromCombo.SelectedItem.ToString(), item.To, null, item.Stop.Departure, null);
-                    connectionsShown++;
+                    if (connectionsShown <= maxAmountOfConnections)
+                    {
+                        this.dataConnections.Rows.Add(this.FromCombo.SelectedItem.ToString(), item.To, null, item.Stop.Departure, null);
+                        connectionsShown++;
+                    }
+                }
+
+                connectionsShown = 0;
+                foreach (var item in stationBoard.Entries)
+                {
+                    if (connectionsShown <= maxAmountOfConnections)
+                    {
+                        this.listForTextForMail.Add("Von " + this.FromCombo.SelectedItem.ToString() + " zu " + item.To + " am " + item.Stop.Departure);
+                        connectionsShown++;
+                    }
                 }
             }
-            connectionsShown = 0;
-            foreach (var item in StationBoard.Entries)
+            catch (Exception)
             {
-                if (connectionsShown <= maxAmountOfConnections)
-                {
-                    listForTextForMail.Add("Von " + FromCombo.SelectedItem.ToString() + " zu " + item.To + " am " + item.Stop.Departure);
-                    connectionsShown++;
-                }
+                MessageBox.Show("Es sieht so aus, als ob keine Abfahrtstafel gefunden werden konnte.\n " +
+                    "Bitte überprüfen Sie Ihre Eingabe oder versichern Sie sich, dass Sie mit dem Internet verbunden sind", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
             }
-        }
-
-        void FormatDateTimeForConnectionQuery()
-        {
-            departureDate = departureDatePicker.Value.Year + "-" + departureDatePicker.Value.Month + "-" + departureDatePicker.Value.Day;
-            departureTime = txtDepartureTime.Text;
-
-            timeQueryConnections = "&date=" + departureDate + "&time=" + departureTime;
-        }
-        void FormatDateTimeForBoardQuery()
-        {
-            departureDate = departureDatePicker.Value.Year + "-" + departureDatePicker.Value.Month + "-" + departureDatePicker.Value.Day;
-            departureTime = txtDepartureTime.Text;
-
-            timeQueryBoard = "&datetime=" + departureDate + departureTime;
-        }
-
-        void renameSearchButton()
-        {
-            if (FromCombo.Items.Count >= 1 && ToCombo.Items.Count >= 1)
-            {
-                label3.Text = "Verbindungen zwischen den Stationen";
-            }
-            else if (ToCombo.Items.Count < 1 && FromCombo.Items.Count >= 1)
-            {
-                label3.Text = "Fahrplan von der Station";
-            }
-        }
-
-        private void ComboFromTextChanged(object sender, EventArgs e)
-        {
-            SearchConnections();
-        }
-
-        private void ComboToTextChanged(object sender, EventArgs e)
-        {
-            SearchConnections();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            txtDepartureTime.Text = DateTime.Now.ToString("HH:mm");
+            this.txtDepartureTime.Text = DateTime.Now.ToString("HH:mm");
         }
 
-        private void txtDepartureTime_TextChanged(object sender, EventArgs e)
+        private void BtnFromMap_Click(object sender, EventArgs e)
         {
-            FormatDateTimeForConnectionQuery();
-            FormatDateTimeForBoardQuery();
-            SearchConnections();
-        }
-
-        private void departureDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            FormatDateTimeForBoardQuery();
-            FormatDateTimeForConnectionQuery();
-            SearchConnections();
-        }
-
-        private void btnFromMap_Click(object sender, EventArgs e)
-        {
-            if (!String.IsNullOrEmpty(FromCombo.Text))
+            if (!string.IsNullOrEmpty(this.FromCombo.Text))
             {
-                System.Diagnostics.Process.Start("https://www.google.com/maps/search/?api=1&query=" + fromCoordinates[FromCombo.SelectedIndex]);
+                System.Diagnostics.Process.Start("https://www.google.com/maps/search/?api=1&query=" + this.fromCoordinates[this.FromCombo.SelectedIndex]);
             }
         }
 
-        private void btnToMap_Click(object sender, EventArgs e)
+        private void BtnToMap_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(ToCombo.Text))
+            if (!string.IsNullOrEmpty(this.ToCombo.Text))
             {
-                System.Diagnostics.Process.Start("https://www.google.com/maps/search/?api=1&query=" + toCoordinates[ToCombo.SelectedIndex]);
+                System.Diagnostics.Process.Start("https://www.google.com/maps/search/?api=1&query=" + this.toCoordinates[this.ToCombo.SelectedIndex]);
             }
-
         }
-        int arrivalOrDeparture()
+
+        /// <summary>
+        /// Diese Funktion schaut nach, wie die Einstellung für Arrival und Departure eingestellt ist
+        /// </summary>
+        /// <returns></returns>
+        private int ArrivalOrDeparture()
         {
-            if (btnArriveAt.Checked)
+            if (this.btnArriveAt.Checked)
             {
                 return 1;
             }
@@ -407,144 +401,114 @@ namespace TrainProject
             }
         }
 
-        private void btnArriveAt_CheckedChanged(object sender, EventArgs e)
+        private void BtnArriveAt_CheckedChanged(object sender, EventArgs e)
         {
-            SearchConnections();
+            this.UseApi();
         }
 
-        private void btnClearFromStation_Click(object sender, EventArgs e)
+        private void BtnClearFromStation_Click(object sender, EventArgs e)
         {
-            FromCombo.Items.Clear();
-            FromCombo.Text = string.Empty;
-            FromStationText.Text = string.Empty;
+            this.FromCombo.Items.Clear();
+            this.FromCombo.Text = string.Empty;
+            this.FromStationText.Text = string.Empty;
         }
 
-        private void btnClearToStation_Click(object sender, EventArgs e)
+        private void BtnClearToStation_Click(object sender, EventArgs e)
         {
-            ToCombo.Items.Clear();
-            ToCombo.Text = string.Empty;
-            ToStationText.Text = string.Empty;
+            this.ToCombo.Items.Clear();
+            this.ToCombo.Text = string.Empty;
+            this.ToStationText.Text = string.Empty;
         }
 
-        private void btnSwitchStation_Click(object sender, EventArgs e)
+        private void BtnSwitchStation_Click(object sender, EventArgs e)
         {
-            skipRound = true;
-            string tempFromText = FromStationText.Text;
-            string tempFromCombo = FromCombo.Text;
+            this.skipRound = true;
+            string tempFromText = this.FromStationText.Text;
+            string tempFromCombo = this.FromCombo.Text;
             List<string> tempFromList = new List<string>();
-            foreach (string item in FromCombo.Items)
+            foreach (string item in this.FromCombo.Items)
             {
                 tempFromList.Add(item);
             }
 
-            FromCombo.Items.Clear();
-            foreach (string item in ToCombo.Items)
+            this.FromCombo.Items.Clear();
+            foreach (string item in this.ToCombo.Items)
             {
-                FromCombo.Items.Add(item);
+                this.FromCombo.Items.Add(item);
             }
-            FromStationText.Text = ToStationText.Text;
-            FromCombo.Text = ToCombo.Text;
 
-            ToCombo.Items.Clear();
+            this.FromStationText.Text = this.ToStationText.Text;
+            this.FromCombo.Text = this.ToCombo.Text;
+
+            this.ToCombo.Items.Clear();
             foreach (string item in tempFromList)
             {
-                ToCombo.Items.Add(item);
+                this.ToCombo.Items.Add(item);
             }
-            ToStationText.Text = tempFromText;
-            ToCombo.Text = tempFromCombo;
+
+            this.ToStationText.Text = tempFromText;
+            this.ToCombo.Text = tempFromCombo;
         }
-        private void wait(int min)
+
+        /// <summary>
+        /// Diese Funktion wurde gemacht, damit eine Funktion warten kann, aber das Program während dem noch funktioniert
+        /// </summary>
+        /// <param name="min"></param>
+        private void Wait(int min)
         {
             if (min == 0 || min < 0) return;
-            //Console.WriteLine("start wait timer");
-            timer1.Interval = min;
-            timer1.Enabled = true;
-            timer1.Start();
-            timer1.Tick += (s, e) =>
+            this.timer1.Interval = min;
+            this.timer1.Enabled = true;
+            this.timer1.Start();
+            this.timer1.Tick += (s, e) =>
             {
-                timer1.Enabled = false;
-                timer1.Stop();
-                //Console.WriteLine("stop wait timer");
+                this.timer1.Enabled = false;
+                this.timer1.Stop();
             };
-            while (timer1.Enabled)
+            while (this.timer1.Enabled)
             {
                 Application.DoEvents();
             }
         }
 
-        private void FromStationText_TextChanged(object sender, EventArgs e)
-        {
-
-            if (!startedLoop)
-            {
-                startedLoop = true;
-                UpdateTexts();
-            }
-        }
-
-        private void ToStationText_TextChanged(object sender, EventArgs e)
-        {
-            if (!startedLoop)
-            {
-                startedLoop = true;
-                UpdateTexts();
-            }
-
-        }
-
         private void Form1_FormClosing_1(object sender, FormClosingEventArgs e)
         {
-            startedLoop = false;
-            timer1.Enabled = false;
+            this.startedLoop = false;
+            this.timer1.Enabled = false;
         }
 
-        static void GetLocationProperty()
+        private static void GetLocationProperty()
         {
-            // Do not suppress prompt, and wait 1000 milliseconds to start.
             watcher.TryStart(false, TimeSpan.FromMilliseconds(1000));
-
             coord = watcher.Position.Location;
-
-            if (coord.IsUnknown != true)
-            {
-                Console.WriteLine("Lat: {0}, Long: {1}",
-                    coord.Latitude,
-                    coord.Longitude);
-            }
-            else
-            {
-                Console.WriteLine("Unknown latitude and longitude.");
-            }
         }
 
-        private void findNearStation_Click(object sender, EventArgs e)
+        private void FindNearStation_Click(object sender, EventArgs e)
         {
-
-            string Lattitude = coord.Latitude.ToString();
+            string lattitude = coord.Latitude.ToString();
             string trimedLattitude = string.Empty;
 
-            string Longitude = coord.Longitude.ToString();
+            string longitude = coord.Longitude.ToString();
             string trimedLongitude = string.Empty;
 
             bool pointAppeared = false;
             int amountOfNumbersAfterPoint = 0;
 
-            foreach (var item in Lattitude)
+            foreach (var item in lattitude)
             {
                 if (item == ',')
                 {
                     trimedLattitude += item;
                     pointAppeared = true;
-
                 }
                 else
                 {
-                    
                     if (amountOfNumbersAfterPoint < 6)
                     {
                         trimedLattitude += item;
                     }
                 }
+
                 if (pointAppeared)
                 {
                     amountOfNumbersAfterPoint++;
@@ -554,13 +518,12 @@ namespace TrainProject
             pointAppeared = false;
             amountOfNumbersAfterPoint = 0;
 
-            foreach (var item in Longitude)
+            foreach (var item in longitude)
             {
                 if (item == ',')
                 {
                     trimedLongitude += item;
                     pointAppeared = true;
-
                 }
                 else
                 {
@@ -569,40 +532,66 @@ namespace TrainProject
                         trimedLongitude += item;
                     }
                 }
+
                 if (pointAppeared)
                 {
                     amountOfNumbersAfterPoint++;
                 }
-
             }
 
-            Stations nearStationBoard = transport.GetNearStationBoard(trimedLattitude, trimedLongitude);
-            if (nearStationBoard.StationList.Count > 0)
+            Stations nearStationBoard = this.transport.GetNearStationBoard(trimedLattitude, trimedLongitude);
+            try
             {
-                FromCombo.Items.Clear();
-                fromCoordinates.Clear();
-                fromStationID.Clear();
+                this.FromCombo.Items.Clear();
+                this.fromCoordinates.Clear();
+                this.fromStationID.Clear();
                 foreach (var item in nearStationBoard.StationList)
                 {
-                    fromCoordinates.Add(format.formatCoordinatesCorrectly(item.Coordinate.XCoordinate.ToString()) + "," + item.Coordinate.YCoordinate.ToString());
-
-                    FromCombo.Items.Add(item.Name);
-
-                    fromStationID.Add(item.Id.ToString());
+                    this.fromCoordinates.Add(this.format.FormatCoordinatesCorrectly(item.Coordinate.XCoordinate.ToString()) + "," + item.Coordinate.YCoordinate.ToString());
+                    this.FromCombo.Items.Add(item.Name);
+                    this.fromStationID.Add(item.Id.ToString());
                 }
-                FromCombo.SelectedIndex = 0;
-            }
 
+                this.FromCombo.SelectedIndex = 0;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Es sieht so aus, als ob keine Station in Ihrer nähe gefunden werden konnte, alternativ könnte es auch an Ihrem Internet liegen", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
         }
 
-        private void btnMakeMail_Click(object sender, EventArgs e)
+        private void BtnMakeMail_Click(object sender, EventArgs e)
         {
-            foreach (var item in listForTextForMail)
+            foreach (var item in this.listForTextForMail)
             {
                 textForMail += item + "\n";
             }
-            MailForm Form2 = new MailForm(listForTextForMail);
-            Form2.ShowDialog();
+
+            MailForm form2 = new MailForm(this.listForTextForMail);
+            form2.ShowDialog();
+        }
+
+        private void StationText_TextChanged(object sender, EventArgs e)
+        {
+            if (!this.startedLoop)
+            {
+                this.startedLoop = true;
+                this.UpdateTexts();
+            }
+        }
+
+        private void ComboTextChanged(object sender, EventArgs e)
+        {
+            this.UseApi();
+        }
+
+        private void TimeOrDateChanged(object sender, EventArgs e)
+        {
+            this.FromCombo.Items.Clear();
+            this.FromCombo.Text = string.Empty;
+            this.FromStationText.Text = string.Empty;
         }
     }
 }

@@ -1,26 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TrainProject
+﻿namespace TrainProject
 {
-    class Format
+    using System.Collections.Generic;
+    using System.Text;
+
+    public class Format
     {
-        public string formatDateCorrectly(string FormatDate) //2018-11-27T15:07:00+0100
+        /// <summary>
+        /// Diese Funktion formatiert das Datum welches man von der API bekommt so, dass sie schön ist.
+        /// </summary>
+        /// <param name="formatDate"></param>
+        /// <returns></returns>
+        public string FormatDateCorrectly(string formatDate) //2018-11-27T15:07:00+0100
         {
             List<char> dateOnly = new List<char>();
 
             for (int i = 0; i < 10; i++)
             {
-                if (FormatDate[i] == '-')
+                if (formatDate[i] == '-')
                 {
                     dateOnly.Add('.');
                 }
                 else
                 {
-                    dateOnly.Add(FormatDate[i]);
+                    dateOnly.Add(formatDate[i]);
                 }
             }
 
@@ -28,33 +30,41 @@ namespace TrainProject
 
             for (int i = 11; i < 16; i++)
             {
-                timeOnly.Add(FormatDate[i]);
+                timeOnly.Add(formatDate[i]);
             }
 
-            FormatDate = "";
+            formatDate = string.Empty;
 
             foreach (var item in dateOnly)
             {
-                FormatDate += item;
-            }
-            FormatDate += " ";
-            foreach (var item in timeOnly)
-            {
-                FormatDate += item;
+                formatDate += item;
             }
 
-            return FormatDate;
+            formatDate += " ";
+            foreach (var item in timeOnly)
+            {
+                formatDate += item;
+            }
+
+            return formatDate;
         }
-        public string formatCoordinatesCorrectly(string coordinates)
+
+        /// <summary>
+        /// Diese Funktion formatiert die Koordinaten, damit sie für Google Maps funktionieren
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <returns></returns>
+        public string FormatCoordinatesCorrectly(string coordinates)
         {
             StringBuilder sb = new StringBuilder(coordinates);
             for (int i = 0; i < coordinates.Length; i++)
             {
                 if (coordinates[i] == ',')
                 {
-                    sb[i] = '.'; ;
+                    sb[i] = '.';
                 }
             }
+
             coordinates = sb.ToString();
             return coordinates;
         }
