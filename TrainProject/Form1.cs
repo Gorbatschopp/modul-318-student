@@ -154,7 +154,7 @@ namespace TrainProject
                 this.btnClearToStation.Enabled = true;
             }
 
-            if (this.FromCombo.Text == string.Empty)
+            if (this.ToCombo.Text == string.Empty)
             {
                 this.btnToMap.Enabled = false;
             }
