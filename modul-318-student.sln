@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainProject", "TrainProjec
 		{D0262178-A48F-4DE0-807B-E76B63E39421} = {D0262178-A48F-4DE0-807B-E76B63E39421}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainProjectTest", "TrainProjectTest\TrainProjectTest.csproj", "{81581DF8-E7ED-4514-9A03-806209582322}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{75E3BFB8-431D-4861-8EAF-B93FE1F4E7B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75E3BFB8-431D-4861-8EAF-B93FE1F4E7B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75E3BFB8-431D-4861-8EAF-B93FE1F4E7B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81581DF8-E7ED-4514-9A03-806209582322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81581DF8-E7ED-4514-9A03-806209582322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81581DF8-E7ED-4514-9A03-806209582322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81581DF8-E7ED-4514-9A03-806209582322}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
