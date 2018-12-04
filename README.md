@@ -1,6 +1,4 @@
 # modul-318-Student
 
-Students!
-Fork this repository to your own Github account. Work there with this repository. The intructor will clone your repo for inspection and evaluation.
-
-Have Fun!
+#### Repository von Nikola Gerun
+Die Dokumentation findet man im "Dokumentation" Ordner. In diesem Ordner findet man auch das Setup für die Installation.
